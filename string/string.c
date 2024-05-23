@@ -16,8 +16,9 @@ int main(void)
     scanf("%d", &strSize);
     getchar();
     char arrPointer[arrSize][strSize];
+
     createArrayElement(arrPointer, arrSize);
-    // readArray(arrPointer, arrSize);
+    readArray(arrPointer, arrSize);
     sortArray(arrPointer, arrSize);
     readArray(arrPointer, arrSize);
 }
@@ -44,14 +45,18 @@ void readArray(char arrPointer[][strSize], int size)
 
 void sortArray(char arrPointer[][strSize], int size)
 {
-    for (int i = 1; i < size; i++)
+    for (int i = 0; i < size - 1; i++)
     {
-        int j = i - 1;
-        while ((j >= 0) && (strlen(arrPointer[i]) < strlen(arrPointer[j])))
+        for (int j = 0; j < size - i - 1; j++)
         {
-            strcpy(arrPointer[j], arrPointer[j + 1]);
-            j--;
+            if (strcmp(arrPointer[j], arrPointer[j + 1]) > 0)
+            {
+                char tmp[strSize];
+                strcpy(tmp, arrPointer[j]);
+                strcpy(arrPointer[j], arrPointer[j + 1]);
+                strcpy(arrPointer[j + 1], tmp);
+            }
         }
-        strcpy(arrPointer[j + 1], arrPointer[i]);
     }
+    printf("Array Sorted!\n");
 }

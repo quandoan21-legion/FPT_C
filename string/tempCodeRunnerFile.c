@@ -1,0 +1,2 @@
+
+    readArray(arrPointer, arrSize);
