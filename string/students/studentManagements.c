@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Declare the default length of student name
 const int studentNameLength = 50;
@@ -18,7 +19,7 @@ typedef struct student
 void studentQuantity(void);
 
 // Declare a function took the quantity of the students user want to create and crate them
-studentInfo *createStudent(int quantity);
+void createStudent(studentInfo student[], int quantity);
 
 // Declare a function that show all of the students in the class
 void readStudents(studentInfo student[], int quantity);
@@ -28,9 +29,8 @@ int main(void)
     studentQuantity();
 }
 
-studentInfo *createStudent(int quantity)
+void createStudent(studentInfo student[], int quantity)
 {
-    studentInfo student[quantity];
     for (int i = 0; i < quantity; i++)
     {
         printf("What is No.%d student's name? ", i + 1);
@@ -45,7 +45,6 @@ studentInfo *createStudent(int quantity)
     printf("The total students in your class is: %d\n", quantity);
     printf("----------------------------------------------------------------------------------------------------------\n");
     readStudents(student, quantity);
-    return student;
 }
 
 void readStudents(studentInfo student[], int quantity)
@@ -62,5 +61,16 @@ void studentQuantity(void)
     int studentQuantity = 0;
     printf("How many students do you want to create today?\n");
     scanf("%d", &studentQuantity);
-    studentInfo *studentList = createStudent(studentQuantity);
+
+    studentInfo *student = (studentInfo *)malloc(studentQuantity * sizeof(studentInfo));
+    if (!student)
+    {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+    createStudent(student, studentQuantity);
+
+    // Clean up: free allocated memory
+    free(student);
 }
